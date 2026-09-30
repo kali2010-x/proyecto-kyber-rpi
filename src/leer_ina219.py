@@ -41,9 +41,13 @@ def main():
         try:
             while time.monotonic() - inicio < DURACION_SEGUNDOS:
                 timestamp = datetime.now().isoformat(timespec="milliseconds")
+
+                # Lecturas del sensor
                 voltaje_V = ina.bus_voltage          # Voltaje del bus (V)
                 corriente_mA = ina.current           # Corriente (mA)
-                potencia_mW = ina.power              # Potencia (mW)
+
+                # Potencia calculada correctamente: V × mA = mW
+                potencia_mW = voltaje_V * corriente_mA
 
                 writer.writerow([
                     timestamp,
